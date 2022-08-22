@@ -102,3 +102,9 @@ resource "aws_instance" "myec2" {
   instance_type = "t2.micro"
   key_name   = "linux-dell"
 }
+
+
+resource "aws_vpc_dhcp_options_association" "dns_resolver" {
+  vpc_id      = aws_vpc.myVpc.id
+  dhcp_options_id = "dopt-0d91982f51cd8ec11"
+}
