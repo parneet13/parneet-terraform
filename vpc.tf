@@ -101,4 +101,3 @@ resource "aws_instance" "myec2" {
   associate_public_ip_address = "true" #allow publica ip
   key_name   = "linux-dell"
 }
-aa
