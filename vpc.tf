@@ -93,18 +93,11 @@ resource "aws_security_group" "mysg" {
   }
 }
 
-
-
 ############### create ec2 instance ##############
 resource "aws_instance" "myec2" {
   ami           = "ami-090fa75af13c156b4" # us-east-1
   subnet_id   = aws_subnet.mysubnet.id
   instance_type = "t2.micro"
+  associate_public_ip_address = "true" #allow publica ip
   key_name   = "linux-dell"
-}
-
-
-resource "aws_vpc_dhcp_options_association" "dns_resolver" {
-  vpc_id      = aws_vpc.myVpc.id
-  dhcp_options_id = "dopt-0d91982f51cd8ec11"
 }
