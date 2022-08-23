@@ -67,7 +67,7 @@ resource "aws_route_table_association" "a" {
 
 #################security group########################
 resource "aws_security_group" "mysg" {
-  name        = "allow all traffic"
+  name        = "mysecurity"
   description = "Allow inbound traffic"
   vpc_id      = aws_vpc.myVpc.id
 
@@ -100,4 +100,5 @@ resource "aws_instance" "myec2" {
   instance_type = "t2.micro"
   associate_public_ip_address = "true" #allow publica ip
   key_name   = "linux-dell"
+  security_groups = ["mysecurity"]  #######enter security group name ###
 }
