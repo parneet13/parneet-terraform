@@ -32,15 +32,6 @@ resource "aws_subnet" "mysubnet" {
   }
 }
 
-resource "aws_subnet" "mysubnet_2" {
-  vpc_id     = aws_vpc.myVpc.id
-  cidr_block = "10.0.1.0/24"
-
-  tags = {
-    Name = "mysubnet2"
-  }
-}
-
 ########################route table ##############
 
 resource "aws_route_table" "myrt" {
@@ -72,15 +63,11 @@ resource "aws_route_table_association" "a" {
   route_table_id = aws_route_table.myrt.id    #route table id or reference
 }
 
-resource "aws_route_table_association" "a2" {
-  subnet_id      = aws_subnet.mysubnet_2.id     #subnat id or reference          
-  route_table_id = aws_route_table.myrt.id    #route table id or reference
-}
 
 
 #################security group########################
 resource "aws_security_group" "mysg" {
-  name        = "mysecurity"
+  name        = "allow all traffic"
   description = "Allow inbound traffic"
   vpc_id      = aws_vpc.myVpc.id
 
@@ -91,9 +78,6 @@ resource "aws_security_group" "mysg" {
     protocol         = "-1" # for allow all traffic
     cidr_blocks      = ["0.0.0.0/0"]
     ipv6_cidr_blocks = null
-    prefix_list_ids  = null
-    security_groups  = null
-    self             = null
   }
 
   egress {
@@ -102,10 +86,6 @@ resource "aws_security_group" "mysg" {
     protocol         = "-1"
     cidr_blocks      = ["0.0.0.0/0"]
     ipv6_cidr_blocks = ["::/0"]
-    description      = "Outbound rule"
-    prefix_list_ids  = null
-    security_groups  = null
-    self             = null
   }
 
   tags = {
@@ -114,23 +94,11 @@ resource "aws_security_group" "mysg" {
 }
 
 ############### create ec2 instance ##############
-
-
-#resource "aws_instance" "myec2" {
- # ami           = "ami-090fa75af13c156b4" # us-east-1
- # subnet_id   = aws_subnet.mysubnet.id
-# instance_type = "t2.micro"
-#  associate_public_ip_address = "true" #allow publica ip
- # key_name   = "linux-dell"
- # security_groups = ["mysecurity"]  #######enter security group name ###
-#}
-
 resource "aws_instance" "myec2" {
   ami           = "ami-090fa75af13c156b4" # us-east-1
-  subnet_id   = aws_subnet.mysubnet_2.id
+  subnet_id   = aws_subnet.mysubnet.id
   instance_type = "t2.micro"
   associate_public_ip_address = "true" #allow publica ip
   key_name   = "linux-dell"
-  security_groups = ["mysecurity"]  #######enter security group name ###
 }
 
