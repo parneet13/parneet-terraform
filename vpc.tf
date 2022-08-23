@@ -96,7 +96,8 @@ resource "aws_security_group" "mysg" {
 ############### create ec2 instance ##############
 resource "aws_instance" "myec2" {
   ami           = "ami-090fa75af13c156b4" # us-east-1
-  subnet_id   = aws_subnet.mysubnet.id
+  subnet_id   = aws_subnet.mysubnet.id  ### eis vich apa subnet id da refrence dita he   refrence apa hesha uda de skde jido apa oh resource nal di nal hi create krna hove 
+  #je apna resource phlo create aa ta sanu ## data ## di verto krni peni aa  
   instance_type = "t2.micro"
   associate_public_ip_address = "true" #allow publica ip
   key_name   = "linux-dell"
